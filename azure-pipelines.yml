@@ -1,0 +1,28 @@
+trigger:
+- master
+
+pool:
+  name: default  # Replace with the name of your self-hosted agent pool
+
+jobs:
+- job: DeployAzureCLI
+  displayName: Deploy Azure CLI on Ubuntu VM
+  pool:
+    agent: 'mydockeragent'
+
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.10'
+      addToPath: true
+
+  - script: |
+      # Replace these variables with your own values
+      # VM_IP_ADDRESS='YOUR_VM_IP_ADDRESS'
+      # VM_USERNAME='YOUR_VM_USERNAME'
+      # VM_SSH_KEY='$(SSHPrivateKey)'  # Define this variable in your pipeline secure variables
+
+      # Install Azure CLI on the remote VM
+      ssh -i "$VM_SSH_KEY" "$VM_USERNAME@$VM_IP_ADDRESS" 'curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash'
+
+    displayName: 'Install Azure CLI on VM'
