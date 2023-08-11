@@ -14,7 +14,10 @@ jobs:
   - task: UsePythonVersion@0
     inputs:
       versionSpec: '3.10'
+      allowUnstable: true
+      githubToken: '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'
       addToPath: true
+      architecture: 'x64'
 
   - script: |
       # Replace these variables with your own values
